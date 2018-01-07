@@ -29,6 +29,6 @@ class Main extends PluginBase implements Listener{
     $this->getLogger()->info('YPluginEncryptor is loading by xMing...');
     }
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
-        new CommandClass($sender,$command,$label,$args,$this);
+           CommandClass::callCmd($sender,$command,$label,$args,$this);
         }
     }
