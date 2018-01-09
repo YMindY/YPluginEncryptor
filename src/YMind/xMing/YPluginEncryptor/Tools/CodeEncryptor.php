@@ -27,14 +27,10 @@ class CodeEncryptor{
       return $pfs;
       }
    private function saveDirs($url){
-      $this->main->getLogger()->info("sd1");
     foreach(glob($url."*") as $g){
-      $this->main->getLogger()->info("sd2");
        if(is_dir($g)){
-         $this->main->getLogger()->info("sd3");
          $g=$g."/";
        array_push($this->dirs,$g);
-      $this->main->getLogger()->info($g);
       $this->saveDirs($g);
       $this->main->getLogger()->info("Getting folder $g");
              }
@@ -44,11 +40,8 @@ class CodeEncryptor{
    $self= new CodeEncryptor();
    $self->main=$main;
          if($self->hasYml($dir)){
-            $self->main->getLogger()->info("saved");
               $self->saveDirs($dir);
-            $self->main->getLogger()->info("getf");
               $pfs=$self->getPHPfiles();
-            $self->main->getLogger()->info("forrun");
               foreach($pfs as $s){
                 $self->Run("1",$s);
                 $self->main->getLogger()->info("Encryptored $s");
