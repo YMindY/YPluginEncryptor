@@ -1,9 +1,6 @@
 <?php
 namespace YMind\xMing\YPluginEncryptor\Tools;
 
-//加密器内部引用
-use YMind\xMing\YPluginEncryptor\Tools\CodeEncryptor;
-
 class CommandClass{
 	public static function callCmd($sender,$command,$label,$args,$main){
 	    	if($command=="ympe"){

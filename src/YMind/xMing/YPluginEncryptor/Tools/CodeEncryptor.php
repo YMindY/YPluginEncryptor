@@ -1,8 +1,6 @@
 <?php
 namespace  YMind\xMing\YPluginEncryptor\Tools;
 
-use YMind\xMing\YPluginEncryptor\Tools\Ways;
-
 class CodeEncryptor{
    private $main;
    private $dirs=array();
@@ -13,7 +11,7 @@ class CodeEncryptor{
   private function Run($id,$file){
          switch($id){
             case "1":
-            Ways::run("1",$file);
+            EncryptWays::run("1",$file);
             }
        }
   private function getPHPfiles(){
