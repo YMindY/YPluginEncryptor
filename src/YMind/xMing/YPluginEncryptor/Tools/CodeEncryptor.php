@@ -1,6 +1,29 @@
 <?php
 namespace  YMind\xMing\YPluginEncryptor\Tools;
-
+function listdir($dir){
+   $pathfiles = array_merge(array_diff(scandir($dir),array('..','.')));
+   //var_dump($pathfiles);
+   //sleep(1);
+   for($i=0;$i<count($pathfiles);$i++)
+   {
+     $pathfiles[$i]=$dir.'/'.$pathfiles[$i];
+   }
+   $files = $pathfiles;
+   foreach($pathfiles as $index=>$pathfile){
+     // var_dump($pathfile);
+      
+      if(is_dir($pathfile)){
+         clearstatcache();
+         $pathfiles = array_merge($pathfiles,listdir($pathfile));
+      }
+   }
+   foreach($pathfiles as $index=>$file){
+      if(is_dir($file)){
+         unset($pathfiles[$index]);
+      }
+   }
+   return array_merge($pathfiles);
+}
 class CodeEncryptor{
    private $main;
    private $dirs=array();
@@ -14,32 +37,22 @@ class CodeEncryptor{
             EncryptWays::run("1",$file);
             }
        }
-  private function getPHPfiles(){
+  private function getPHPfiles($dir){
         $pfs=array();
-        foreach($this->dirs as $ds){
-         foreach(glob($ds."*.php") as $ps){
+        foreach(listdir($dir) as $ps){
+         if(preg_match('/\.php$/',$ps)){
          array_push($pfs,$ps);
          $this->main->getLogger()->info("Getting file $ps");
           }
         }
       return $pfs;
       }
-   private function saveDirs($url){
-    foreach(glob($url."*") as $g){
-       if(is_dir($g)){
-         $g=$g."/";
-       array_push($this->dirs,$g);
-      $this->saveDirs($g);
-      $this->main->getLogger()->info("Getting folder $g");
-             }
-            }
-           }
   public static function EncryptPlugin($dir,$main){
    $self= new CodeEncryptor();
    $self->main=$main;
          if($self->hasYml($dir)){
-              $self->saveDirs($dir);
-              $pfs=$self->getPHPfiles();
+              $pfs=$self->getPHPfiles($dir);
+              //var_dump($pfs);
               foreach($pfs as $s){
                 $self->Run("1",$s);
                 $self->main->getLogger()->info("Encryptored $s");

@@ -31,7 +31,8 @@ class Main extends PluginBase implements Listener{
     public function onDisable(){
            $this->getLogger()->info('YPluginEncryptor turned off');
     }
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool{
            CommandClass::callCmd($sender,$command,$label,$args,$this);
+           return true;
         }
     }
